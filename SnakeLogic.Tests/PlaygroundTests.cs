@@ -1,4 +1,7 @@
-﻿namespace SnakeLogic.Tests
+﻿using System.Drawing;
+using System.Xml.Linq;
+
+namespace SnakeLogic.Tests
 {
     [TestClass]
     public class PlaygroundTests
@@ -55,6 +58,39 @@
             //Assert
             Assert.IsTrue(playground.IsSnakeEatingFood());
 
+        }
+        [TestMethod]
+        public void SnakeGrow_whenEatFood()
+        {
+            //Arrange
+            var playground = new Playground(5);
+            playground.Direction = Directions.Right;
+            playground.StartGame();
+
+            
+            //act
+            playground.MoveSnake();
+            
+            //Assert
+
+            Assert.AreEqual(1, playground.Snake.SnakeBody.Count);
+            
+        }
+        [TestMethod]
+        public void SnakeDiesWhenHittingWall()
+        {
+            //Arrange
+            var playground = new Playground(5);
+            playground.Direction = Directions.Right;
+            playground.Snake = new Snake(0, 4);
+            playground.StartGame();
+
+            
+            // Act
+            playground.MoveSnake();
+
+            // Assert
+            Assert.IsFalse(playground.Snake.IsAlive);
         }
     }
 }
